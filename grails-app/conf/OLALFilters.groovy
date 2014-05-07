@@ -22,7 +22,7 @@ class OLALFilters {
     }
 
     private void compileParamFilterPattern() {
-        def paramFilterConf = grailsApplication.config.grails.plugins.olal.addlParamsToFilter
+        def paramFilterConf = grailsApplication.config.grails.plugins.olal.paramsToFilter
 
         if (paramFilterConf) {
             def patterns = paramFilterConf.clone()
