@@ -32,4 +32,6 @@ This can be used to set app-specific date into the Log4j's MDC.
 Configure list of parameter names for the values should be replaced with '[FILTERED]' in the log.
 > grails.plugins.olal.paramsToFilter = ['password’]
     
-
+### TODO
+* make paramsToFilter required to startup
+ 
