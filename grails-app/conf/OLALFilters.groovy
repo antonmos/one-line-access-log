@@ -18,6 +18,10 @@ class OLALFilters {
         def conf = grailsApplication.config.grails.plugins.olal.dependsOnFilters
         dependsOn =   conf ? conf : []
 
+        compileParamFilterPattern()
+    }
+
+    private void compileParamFilterPattern() {
         def paramFilterConf = grailsApplication.config.grails.plugins.olal.addlParamsToFilter
 
         if (paramFilterConf) {
@@ -25,7 +29,6 @@ class OLALFilters {
             paramFilterConf.each {
                 patterns << ".*\\.$it"
             }
-            println patterns
             filterParamRegExp = Pattern.compile(patterns.join('|'), Pattern.CASE_INSENSITIVE)
         }
     }
