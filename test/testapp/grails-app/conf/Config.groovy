@@ -126,4 +126,3 @@ log4j = {
 
 
 grails.plugins.olal.dependsOnFilters = [filters.ZTestFilters.class]
-grails.plugins.olal.paramsToFilter = ['asd']

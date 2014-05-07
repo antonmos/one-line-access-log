@@ -1,12 +1,12 @@
 one-line-access-log plugin
 ==========================
 
-Grails does not come with an Grails-centric access log which shows useful info for every request.
+Grails does not come with a Grails-centric access log which shows useful info for every request.
 
 This plugin sets up a filter that logs the following info:
  * source IP address
  * http response status code
- * total time and percentage spend in view processing
+ * total time and percentage spent in view processing
  * http method
  * controller and action names
  * params hash with configurable list of sensitive parameters that should be filtered, e.g. passwords
@@ -17,7 +17,7 @@ Example log entry:
 ### Installation
 
 * add as runtime dependency to BuildConfig.groovy
-* add grails.plugins.olal.paramsToFilter to Config.groovy
+* configure  grails.exceptionresolver.params.exclude to Config.groovy to filter sensitive data
 * Configure log4j loggers in Config.groovy, e.g. *root { info 'stdout' }*
 
 ### Configuration
@@ -26,12 +26,10 @@ Example log entry:
 To ensure that your application's LogginFilter is executed before the plugin log is written, add the following to Config.groovy
 > grails.plugins.olal.dependsOnFilters = [filters.LoggingFilters.class]
 
-This can be used to set app-specific date into the Log4j's MDC.
+This can be used to set app-specific data into the Log4j's MDC, so that it would be logged along with the access log entry.
 
 #### Configuration of sensitive parameters that should be filtered from the logs.
 Configure list of parameter names for the values should be replaced with '[FILTERED]' in the log.
-> grails.plugins.olal.paramsToFilter = ['password’]
+> grails.exceptionresolver.params.exclude = 'password'
     
-### TODO
-* make paramsToFilter required to startup
  
