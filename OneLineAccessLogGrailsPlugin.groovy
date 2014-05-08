@@ -5,7 +5,8 @@ class OneLineAccessLogGrailsPlugin {
     def grailsVersion = "2.2 > *"
     // resources that are excluded from plugin packaging
     def pluginExcludes = [
-        "grails-app/views/error.gsp"
+        "grails-app/views/error.gsp",
+        "lib/grails-rt.jar"
     ]
 
     def title = "One Line Access Log Plugin" // Headline display name of the plugin
