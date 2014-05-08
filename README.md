@@ -23,8 +23,8 @@ Example log entry:
 ### Configuration
 
 #### Configuration of application-specific Grails Filters
-To ensure that your application's LogginFilter is executed before the plugin log is written, add the following to Config.groovy
-> grails.plugins.olal.dependsOnFilters = [filters.LoggingFilters.class]
+To ensure that your application's LoggingFilters is executed before the plugin log is written, add the following to Config.groovy
+> grails.plugins.one.line.access.log.dependsOnFilters = [filters.LoggingFilters.class]
 
 This can be used to set app-specific data into the Log4j's MDC, so that it would be logged along with the access log entry.
 

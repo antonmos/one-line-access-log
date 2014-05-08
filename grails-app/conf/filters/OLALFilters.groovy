@@ -15,7 +15,7 @@ class OLALFilters {
 
     @PostConstruct
     def init() {
-        def conf = grailsApplication.config.grails.plugins.olal.dependsOnFilters
+        def conf = grailsApplication.config.grails.plugins.one.line.access.log.dependsOnFilters
         dependsOn =   conf ? conf : []
         configure()
     }

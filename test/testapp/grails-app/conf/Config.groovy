@@ -125,4 +125,4 @@ log4j = {
 }
 
 
-grails.plugins.olal.dependsOnFilters = [filters.ZTestFilters.class]
+grails.plugins.one.line.access.log.dependsOnFilters = [filters.ZTestFilters.class]
