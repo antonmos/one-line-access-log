@@ -1,6 +1,6 @@
 class OneLineAccessLogGrailsPlugin {
     // the plugin version
-    def version = "0.4"
+    def version = "0.6  "
     // the version or versions of Grails the plugin is designed for
     def grailsVersion = "2.2 > *"
     // resources that are excluded from plugin packaging
@@ -13,8 +13,9 @@ class OneLineAccessLogGrailsPlugin {
     def author = "Anton Mostovoy"
     def authorEmail = "anton@mostovoy.net"
     def description = '''\
+Grails does not come with a Grails-centric access log which shows useful info for every request.
 This plugin provides a single line access log for every request in the format:
-"(10.1.3.5) Status 200 in 0.003s (view 33%) for [GET] to FooBooController#index [asd:324]"
+{code}(10.1.3.5) Status 200 in 0.003s (view 33%) for [GET] to FooBooController#index [asd:324]{code}
 '''
 
     // URL to the plugin's documentation

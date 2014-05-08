@@ -46,8 +46,3 @@ grails.project.dependency.resolution = {
         }
     }
 }
-grails.project.repos.bintray.url = "https://api.bintray.com/maven/antonmos/maven/one-line-access-log"
-grails.project.repos.bintray.type = "maven"
-grails.project.repos.bintray.username = "antonmos"
-grails.project.repos.bintray.password = "c2a0c510a96a819151a205f50daf2fb8804c6238"
-grails.project.repos.default = "bintray"

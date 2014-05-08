@@ -4,3 +4,4 @@ target
 *.iml
 plugin.xml
 *.zip
+grails-one-line-access-log-*
