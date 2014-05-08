@@ -1,6 +1,6 @@
 class OneLineAccessLogGrailsPlugin {
     // the plugin version
-    def version = "0.3"
+    def version = "0.4"
     // the version or versions of Grails the plugin is designed for
     def grailsVersion = "2.2 > *"
     // resources that are excluded from plugin packaging
@@ -61,6 +61,7 @@ This plugin provides a single line access log for every request in the format:
     def onConfigChange = { event ->
         // TODO Implement code that is executed when the project configuration changes.
         // The event is the same as for 'onChange'.
+        event.ctx.getBean(filters.OLALFilters).configure()
     }
 
     def onShutdown = { event ->

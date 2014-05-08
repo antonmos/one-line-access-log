@@ -1,7 +1,7 @@
+package filters
 import grails.util.GrailsNameUtils
 
 import javax.annotation.PostConstruct
-import java.util.regex.Pattern
 
 class OLALFilters {
 
@@ -11,25 +11,19 @@ class OLALFilters {
     def grailsApplication
     def dependsOn = []
 
-    private Pattern filterParamRegExp
+    private ParameterFilter paramFilter
 
     @PostConstruct
     def init() {
         def conf = grailsApplication.config.grails.plugins.olal.dependsOnFilters
         dependsOn =   conf ? conf : []
-
-        compileParamFilterPattern()
+        configure()
     }
 
-    private void compileParamFilterPattern() {
-        def paramFilterConf = grails.exceptionresolver.params.exclude
-
+    public void configure() {
+        def paramFilterConf = grailsApplication.config.grails.exceptionresolver.params.exclude
         if (paramFilterConf) {
-            def patterns = paramFilterConf.clone()
-            paramFilterConf.each {
-                patterns << ".*\\.$it"
-            }
-            filterParamRegExp = Pattern.compile(patterns.join('|'), Pattern.CASE_INSENSITIVE)
+            paramFilter = new ParameterFilter(paramFilterConf)
         }
     }
 
@@ -49,8 +43,8 @@ class OLALFilters {
                 def formattedCtrlName = formatControllerName(controllerName)
                 def actionParamsOnly = getActionParams(params)
 
-                int actionPct = (double)(view * 100) / total
-                log.info("($request.remoteAddr) Status $response.status in ${total/1000}s (view $actionPct%) for [$request.method] to $formattedCtrlName#$actionName ${actionParamsOnly} ")
+                int viewPct = (double)(view * 100) / total
+                log.info("($request.remoteAddr) Status $response.status in ${total/1000}s (view $viewPct%) for [$request.method] to $formattedCtrlName#$actionName ${actionParamsOnly} ")
 
             }
         }
@@ -66,27 +60,11 @@ class OLALFilters {
         queryParams.remove('controller')
         queryParams.remove('format')
 
-        if(filterParamRegExp) {
-            return filterParams(queryParams)
+        if(paramFilter) {
+            return paramFilter.filterParams(queryParams)
         } else {
             return queryParams;
         }
     }
-    def filterParams(Map params) {
 
-        def filtered = [:]
-
-        params.each { String key, value ->
-            if (filterParamRegExp.matcher(key).matches()) {
-                value = '[FILTERED]'
-            } else if (value instanceof Map) {
-                value = filterParams(value)
-            } else if (value.class.isArray()) {
-                value.each { it instanceof Map ? filterParams(it) : it }
-            }
-
-            filtered[key] = value
-        }
-        return filtered
-    }
 }
