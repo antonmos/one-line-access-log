@@ -56,12 +56,12 @@ class OLALFilters {
 
     int getStatus(ServletResponse response ) {
         if(response.respondsTo('getStatus')) return response.status
-        return getStatus(response)
+        return getStatusFromWrapped(response)
     }
 
-    int getStatus(ServletResponseWrapper response) {
+    int getStatusFromWrapped(ServletResponseWrapper response) {
         if (response.response instanceof ServletResponseWrapper) {
-            return getStatus(response.response)
+            return getStatusFromWrapped(response.response)
         } else {
             return response.status
         }
