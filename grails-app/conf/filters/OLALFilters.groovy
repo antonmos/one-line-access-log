@@ -2,6 +2,8 @@ package filters
 import grails.util.GrailsNameUtils
 
 import javax.annotation.PostConstruct
+import javax.servlet.ServletResponse
+import javax.servlet.ServletResponseWrapper
 
 class OLALFilters {
 
@@ -43,10 +45,25 @@ class OLALFilters {
                 def formattedCtrlName = formatControllerName(controllerName)
                 def actionParamsOnly = getActionParams(params)
 
+                int status = getStatus(response)
+
                 int viewPct = (double)(view * 100) / total
-                log.info("($request.remoteAddr) Status $response.status in ${total/1000}s (view $viewPct%) for [$request.method] to $formattedCtrlName#$actionName ${actionParamsOnly} ")
+                log.info("($request.remoteAddr) Status $status in ${total/1000}s (view $viewPct%) for [$request.method] to $formattedCtrlName#$actionName ${actionParamsOnly} ")
 
             }
+        }
+    }
+
+    int getStatus(ServletResponse response ) {
+        if(response.respondsTo('getStatus')) return response.status
+        return getStatus(response)
+    }
+
+    int getStatus(ServletResponseWrapper response) {
+        if (response.response instanceof ServletResponseWrapper) {
+            return getStatus(response.response)
+        } else {
+            return response.status
         }
     }
 
