@@ -1,5 +1,6 @@
 package filters
 import grails.util.GrailsNameUtils
+import org.apache.catalina.connector.ResponseFacade
 
 import javax.annotation.PostConstruct
 import javax.servlet.ServletResponse
@@ -47,23 +48,23 @@ class OLALFilters {
 
                 int status = getStatus(response)
 
-                int viewPct = (double)(view * 100) / total
-                log.info("($request.remoteAddr) Status $status in ${total/1000}s (view $viewPct%) for [$request.method] to $formattedCtrlName#$actionName ${actionParamsOnly} ")
+                int viewPct = (double) (view * 100) / total
+                log.info("($request.remoteAddr) Status $status in ${total / 1000}s (view $viewPct%) for [$request.method] to $formattedCtrlName#$actionName ${actionParamsOnly} ")
 
             }
         }
     }
 
-    int getStatus(ServletResponse response ) {
-        if(response.respondsTo('getStatus')) return response.status
-        return getStatusFromWrapped(response)
-    }
-
-    int getStatusFromWrapped(ServletResponseWrapper response) {
-        if (response instanceof ServletResponseWrapper) {
-            return getStatusFromWrapped(response.response)
-        } else {
+    int getStatus(def response ) {
+        def prop = response.hasProperty('status')
+        if(prop?.field || prop?.getter) {
             return response.status
+        }
+        if (response.hasProperty('response')) {
+            return getStatus(response.response)
+        } else {
+            log.warn("Cannot determine http status in this container")
+            return 999
         }
     }
 
