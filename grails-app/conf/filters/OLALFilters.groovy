@@ -1,4 +1,5 @@
 package filters
+
 import grails.util.GrailsNameUtils
 
 import javax.annotation.PostConstruct
@@ -16,7 +17,7 @@ class OLALFilters {
     @PostConstruct
     def init() {
         def conf = grailsApplication.config.grails.plugins.one.line.access.log.dependsOnFilters
-        dependsOn =   conf ? conf : []
+        dependsOn = conf ? conf : []
         configure()
     }
 
@@ -38,8 +39,8 @@ class OLALFilters {
             }
             afterView = { Exception e ->
                 long now = System.currentTimeMillis()
-                long total = now - request[START_TIME_ATTRIBUTE]
-                long view = now - request[VIEW_START_TIME_ATTRIBUTE]
+                long total = now - (request[START_TIME_ATTRIBUTE] ?: now)
+                long view = now - (request[VIEW_START_TIME_ATTRIBUTE] ?: now)
                 def formattedCtrlName = formatControllerName(controllerName)
                 def actionParamsOnly = getActionParams(params)
 
@@ -52,9 +53,9 @@ class OLALFilters {
         }
     }
 
-    int getStatus(def response ) {
+    int getStatus(def response) {
         def prop = response.hasProperty('status')
-        if(prop?.field || prop?.getter) {
+        if (prop?.field || prop?.getter) {
             return response.status
         }
         if (response.hasProperty('response')) {
@@ -75,7 +76,7 @@ class OLALFilters {
         queryParams.remove('controller')
         queryParams.remove('format')
 
-        if(paramFilter) {
+        if (paramFilter) {
             return paramFilter.filterParams(queryParams)
         } else {
             return queryParams;
