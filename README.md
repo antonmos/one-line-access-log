@@ -1,3 +1,6 @@
+NOT MAINTAINED!
+
+
 one-line-access-log plugin
 ==========================
 
