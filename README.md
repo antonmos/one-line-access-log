@@ -1,4 +1,4 @@
-NOT MAINTAINED!
+No longer maintained, please feel free to fork!
 
 
 one-line-access-log plugin
